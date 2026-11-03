@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data;
-using System.Data.SQLite; // Використовуємо SQLite замість MySQL
+using System.Data.SQLite;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml;
@@ -9,7 +9,6 @@ namespace Lab_4
 {
     public partial class Form1 : Form
     {
-        // Автоматичний файл бази даних SQLite. Жодних серверів та паролів!
         private string connectionString = "Data Source=inventar.db;Version=3;";
 
         public Form1()
@@ -19,7 +18,6 @@ namespace Lab_4
             LoadDataFromDb();
         }
 
-        // Автоматична ініціалізація бази даних SQLite
         private void InitDatabase()
         {
             try
@@ -52,7 +50,6 @@ namespace Lab_4
             }
         }
 
-        // Відображення таблиці в DataGridView
         private void LoadDataFromDb()
         {
             try
@@ -69,7 +66,7 @@ namespace Lab_4
             catch { }
         }
 
-        // Кнопка 1: "Створити XML з таблиці" (Пункт 2)
+        // Кнопка 1
         private void button1_Click(object sender, EventArgs e)
         {
             DataTable dt = new DataTable();
@@ -102,7 +99,7 @@ namespace Lab_4
             dt.Rows.Add(dr);
         }
 
-        // Кнопка 2: "Створити XML на основі БД" (Пункт 3)
+        // Кнопка 2
         private void button2_Click(object sender, EventArgs e)
         {
             DataSet ds = new DataSet();
@@ -125,7 +122,7 @@ namespace Lab_4
             }
         }
 
-        // Кнопка 3: "Вибірка у інший XML за кодом" (code > 5)
+        // Кнопка 3
         private void button3_Click(object sender, EventArgs e)
         {
             if (File.Exists("Person.xml"))
@@ -146,7 +143,7 @@ namespace Lab_4
             }
         }
 
-        // Кнопка 4: "Пошук особи у XML файлі" (Пункт 4)
+        // Кнопка 4
         private void button4_Click(object sender, EventArgs e)
         {
             if (File.Exists("Person.xml"))
@@ -178,10 +175,9 @@ namespace Lab_4
             }
         }
 
-        // Кнопка 5: "Вибірка за посадою" (Пункт 5)
+        // Кнопка 5
         private void button5_Click(object sender, EventArgs e)
         {
-            // 1. Автоматично беремо текст із нижнього поля (pos або textBox2)
             string searchPos = "";
             if (Controls.Find("pos", true).Length > 0)
                 searchPos = Controls.Find("pos", true)[0].Text.Trim();
@@ -190,7 +186,6 @@ namespace Lab_4
             else
                 searchPos = textBox1.Text.Trim();
 
-            // 2. Беремо файл Result.xml (якщо є) або Person.xml
             string xmlFile = File.Exists("Result.xml") ? "Result.xml" : (File.Exists("Person.xml") ? "Person.xml" : null);
 
             if (xmlFile == null)
@@ -208,7 +203,6 @@ namespace Lab_4
                 return;
             }
 
-            // 3. Шукаємо збіги за посадою
             DataTable dtResult = ds.Tables[0].Clone();
             string foundList = "";
 
@@ -224,7 +218,6 @@ namespace Lab_4
                 }
             }
 
-            // 4. Якщо знайшли — зберігаємо у Result2.xml та виводимо повідомлення
             if (dtResult.Rows.Count > 0)
             {
                 DataSet dsNew = new DataSet();
@@ -239,7 +232,7 @@ namespace Lab_4
             }
         }
 
-        // Кнопка 6: "Запис з XML до БД" (Пункт 6)
+        // Кнопка 6
         private void button6_Click(object sender, EventArgs e)
         {
             if (File.Exists("NewPerson.xml"))
@@ -286,7 +279,7 @@ namespace Lab_4
             }
         }
 
-        // Кнопка 7: "Оновити"
+        // Кнопка 7
         private void button7_Click(object sender, EventArgs e)
         {
             LoadDataFromDb();
